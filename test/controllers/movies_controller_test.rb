@@ -3,9 +3,9 @@ require 'test_helper'
 class MoviesControllerTest < ActionDispatch::IntegrationTest
   describe "create" do
     it "creates a new movie" do
-      post new_movie_path, params: { movie: { title: "WowMovie!", overview: "MyText", release_date: "2017-01-11", inventory: 4 }}
-      must_respond_with :success
-      Movie.last.must_equal movies(:one)
+      post new_movie_path params: { title: "WowMovie!", overview: "MyText", release_date: "2017-01-11", inventory: 4 }
+      assert_response :success
+      Movie.last.title.must_equal movies(:one).title
     end
 
     it "returns the id of the movie if successful" do
