@@ -1,6 +1,22 @@
 require 'test_helper'
 
 class MoviesControllerTest < ActionDispatch::IntegrationTest
+  describe "create" do
+    it "creates a new movie" do
+      post new_movie_path, params: { movie: { title: "WowMovie!", overview: "MyText", release_date: "2017-01-11", inventory: 4 }}
+      must_respond_with :success
+      Movie.last.must_equal movies(:one)
+    end
+
+    it "returns the id of the movie if successful" do
+      post new_movie_path(movies(:one))
+      body = JSON.parse(response.body)
+      body.must_be_kind_of Hash
+      body["id"].must_equal Movie.last.id
+    end
+
+    # checks that if the movie already exisit in our library, then it return error message
+  end
   describe "index" do
     it "returns a JSON array" do
       get movies_url
