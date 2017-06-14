@@ -12,7 +12,12 @@ class MoviesController < ApplicationController
   end
 
   def create
-    puts ">>>>>>>>>>>>>>> #{params}"
+    movie = Movie.new(movie_params)
+    if movie.save
+      render status: :ok, json: { id: movie.id }
+    else
+      render status: :bad_request, json: { errors: movie.errors.messages }
+    end
   end
 
   def show
@@ -32,5 +37,9 @@ class MoviesController < ApplicationController
     unless @movie
       render status: :not_found, json: { errors: { title: ["No movie with title #{params["title"]}"] } }
     end
+  end
+
+  def movie_params
+    params.permit(:title, :overview, :release_date, :image_url, :external_id)
   end
 end
