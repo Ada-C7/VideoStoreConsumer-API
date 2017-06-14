@@ -5,6 +5,7 @@ class MoviesController < ApplicationController
     if params[:query]
       data = MovieWrapper.search(params[:query])
     else
+
       data = Movie.all
     end
 
@@ -20,6 +21,18 @@ class MoviesController < ApplicationController
         )
       )
   end
+
+  def create
+     # @movie = Movie.new(movie_params)
+     # if @movie.save
+     #      flash[:success] = "New #{@movie.name} cateogry has been successfully created"
+     #      redirect_to root_path
+     # else
+     #      flash[:error] = "Category could not be created"
+     #      @movie.errors.messages
+     #      render 'new'
+     # end
+end
 
   private
 
