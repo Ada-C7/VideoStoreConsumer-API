@@ -2,6 +2,11 @@ class RentalsController < ApplicationController
   before_action :require_movie, only: [:check_out, :check_in]
   before_action :require_customer, only: [:check_out, :check_in]
 
+  # def create
+  #   rental = Rental.create(params)
+  #   puts rental
+  # end
+  #
   def check_out
     rental = Rental.new(movie: @movie, customer: @customer, due_date: params[:due_date], returned: false)
 
