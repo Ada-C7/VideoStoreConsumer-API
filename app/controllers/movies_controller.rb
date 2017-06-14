@@ -12,19 +12,23 @@ class MoviesController < ApplicationController
 
   def create
     print "In create method:"
-    movie = Movie.create(movie_params)
-
+    movie = Movie.new(movie_params)
+    existing_movie = Movie.find_by(title: params[:title])
+    print params[:image_url]
+    if existing_movie.nil?
+      movie.save
+    end
   end
 
 
   def show
     render(
-      status: :ok,
-      json: @movie.as_json(
-        only: [:title, :overview, :release_date, :inventory],
-        methods: [:available_inventory]
-        )
-      )
+    status: :ok,
+    json: @movie.as_json(
+    only: [:title, :overview, :release_date, :inventory],
+    methods: [:available_inventory]
+    )
+    )
   end
 
   private
