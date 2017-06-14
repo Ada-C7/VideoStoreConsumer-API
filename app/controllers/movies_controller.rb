@@ -23,9 +23,12 @@ class MoviesController < ApplicationController
 
   def create
     movie = Movie.new(movie_params)
+    puts "before movie.save"
     if movie.save
-      render status: :okay, json: { id: movie.id }
+      puts "in movie.save"
+      render status: :ok, json: { id: movie.id }
     else
+      puts "in bad_request"
       render status: :bad_request, json: { errors: movie.errors.messages }
     end
   end
