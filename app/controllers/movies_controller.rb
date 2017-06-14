@@ -11,6 +11,10 @@ class MoviesController < ApplicationController
     render status: :ok, json: data
   end
 
+  def create
+    puts ">>>>>>>>>>>>>>> #{params}"
+  end
+
   def show
     render(
       status: :ok,
