@@ -22,12 +22,9 @@ class MoviesController < ApplicationController
 
     movie = Movie.new(movie_data)
     existing_movie = Movie.find_by(title: params[:title])
-    movie.save
-    print movie.image_url
-    # if existing_movie.nil?
-    #   movie.save
-    #   print movie.image_url
-    # end
+    if existing_movie.nil?
+      movie.save
+    end
   end
 
 
