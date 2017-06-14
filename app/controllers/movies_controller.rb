@@ -12,15 +12,15 @@ class MoviesController < ApplicationController
     end
 
     def create
-        unless Movie.include? Movie.where(title: movie_params[:title], external_id: movie_params[:external_id])
+        # unless Movie.include? Movie.where(title: movie_params[:title], external_id: movie_params[:external_id])
             movie = Movie.new(movie_params)
             if movie.save
                 render status: :ok, json: { id: movie.id }
             else
                 render status: :bad_request, json: { errors: movie.errors.messages }
             end
-        end
-        puts 'Win win win'
+        # end
+        # puts 'Win win win'
     end
 
     def show
@@ -43,6 +43,6 @@ class MoviesController < ApplicationController
     end
 
     def movie_params
-        params.permit(:title, :overview, :release_date, :image_url, :external_id)
+        params.require(:movie).permit(:title, :overview, :release_date, :image_url)
     end
 end
