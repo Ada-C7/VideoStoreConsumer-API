@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   post "/rentals/:title/return", to: "rentals#check_in", as: "check_in"
   get "/rentals/overdue", to: "rentals#overdue", as: "overdue"
 
-
+  get "/rentals/search/:query", to: "movies#index"
 end
