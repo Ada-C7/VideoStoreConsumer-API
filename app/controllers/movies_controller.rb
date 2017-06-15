@@ -23,7 +23,7 @@ class MoviesController < ApplicationController
 
   def create
     # given JSON from addMovie in movie_view, create a movie in the db
-    movie = Movie.new(title: params["title"], overview: params["overview"], release_date: params["release_date"], image_url: params["image_url"])
+    movie = Movie.new(title: params["title"], overview: params["overview"], release_date: params["release_date"], image_url: params["image_url"], inventory: params["inventory"])
 
     if movie.save
       render status: :ok, json: movie
