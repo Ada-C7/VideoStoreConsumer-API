@@ -21,7 +21,8 @@ class MoviesController < ApplicationController
     }
 
     movie = Movie.new(movie_data)
-    existing_movie = Movie.find_by(title: params[:title])
+    existing_movie = Movie.find_by(title: params[:title], release_date: params[:release_date])
+    puts existing_movie
     if existing_movie.nil?
       movie.save
     end
