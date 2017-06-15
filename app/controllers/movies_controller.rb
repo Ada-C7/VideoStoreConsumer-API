@@ -21,6 +21,13 @@ class MoviesController < ApplicationController
       )
   end
 
+  def create
+    # check if the movie is already in the rails db by checking if there is a movie in the rails db with the same title and release date from params (use find by)
+    # if the movie already exists in the rails db, then increase the inventory by 1
+    # set inventory to 1 when we create the movie in the rails db 
+  end
+
+
   private
 
   def require_movie
