@@ -12,15 +12,16 @@ class MoviesController < ApplicationController
     end
 
     def create
-        unless Movie.include? Movie.where(title: movie_params[:title], external_id: movie_params[:external_id])
+        if Movie.where(title: movie_params[:title], release_date: movie_params[:release_date]).empty?
             movie = Movie.new(movie_params)
             if movie.save
                 render status: :ok, json: { id: movie.id }
             else
                 render status: :bad_request, json: { errors: movie.errors.messages }
             end
+        else
+            render status: :bad_request, json: { errors: movie.errors.messages }
         end
-        puts 'Win win win'
     end
 
     def show
