@@ -13,7 +13,12 @@ class Movie < ApplicationRecord
     if !orig_value
       MovieWrapper::DEFAULT_IMG_URL
     else
+      puts "This is the orig_value" + orig_value
+      if orig_value.include?('http')
+        return orig_value
+      else
       MovieWrapper.construct_image_url(orig_value)
+      end
     end
   end
 end
