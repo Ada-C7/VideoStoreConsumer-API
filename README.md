@@ -24,7 +24,9 @@ Search The Movies DB for movies matching the query
   Minimum fields to return:
   - `title`
   - `release_date`
-<!-- 
+
+
+<!--
 ## Other Notes
 Note that this is functionality that was built into the original API
 ### Query Parameters
