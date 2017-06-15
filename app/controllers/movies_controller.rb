@@ -21,6 +21,11 @@ class MoviesController < ApplicationController
       )
   end
 
+  def create
+    movie = Movie.new(params)
+    movie.save
+  end
+
   private
 
   def require_movie
