@@ -21,6 +21,22 @@ class MoviesController < ApplicationController
       )
   end
 
+  def create
+    movie_data = {
+      title: movie_params[:title],
+      overview: movie_params[:overview],
+      release_date: movie_params[:release_date],
+      image_url: movie_params[:image_url][31..-1]
+    }
+
+    movie = Movie.new(movie_data)
+    existing_movie = Movie.find_by(title: params[:title], release_date: params[:release_date])
+    if existing_movie.nil?
+    movie.save
+    end
+  end
+
+
   private
 
   def require_movie
