@@ -11,6 +11,29 @@ class MoviesController < ApplicationController
     render status: :ok, json: data
   end
 
+  ###### Attempt 1 ######
+
+  # def new
+  #   @movie = Movie.new()
+  # end
+  # this would return an HTML form for creating a new movie
+  # I just want to add a new movie
+
+  def create #add to rental library
+    @movie = Movie.new(data)
+    if @movie.save
+      respond_to do |format|
+        format.json{}
+      end
+      flash[:status] = :success
+
+    else
+      flash[:status] = :failure
+    end
+  end
+
+  ###### ########## ######
+
   def show
     render(
       status: :ok,
