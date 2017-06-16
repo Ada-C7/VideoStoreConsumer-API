@@ -33,6 +33,10 @@ class MoviesController < ApplicationController
 
   end
 
+  def destroy
+    Movie.destroy(params["id"])
+  end
+
   private
 
   def require_movie
