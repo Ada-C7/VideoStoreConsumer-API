@@ -26,19 +26,19 @@ class MoviesController < ApplicationController
     # if the movie already exists in the rails db, then increase the inventory by 1
     # set inventory to 1 when we create the movie in the rails db
 
-    # movie = Movie.find_by(title: params[:title])
-    # if movie
-    #   movie.inventory += 1
-    # else
+    movie = Movie.find_by(title: params[:title], release_date: params[:release_date])
+    if movie
+      movie.inventory += 1
+      movie.save
+    else
       movie = Movie.new(movie_params)
+      movie.inventory = 1
       if movie.save
         render status: :ok, json: {id: movie.id}
       else
         render status: :bad_request, json: { errors: movie.errors.messages }
       end
-    # end
-
-
+    end
   end
 
 
@@ -52,6 +52,6 @@ class MoviesController < ApplicationController
   end
 
   def movie_params
-    params.require.permit(:title, :overview, :release_date, :inventory, :image_url)
+    params.require(:movie).permit(:title, :overview, :release_date, :inventory, :image_url)
   end
 end
