@@ -75,4 +75,27 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
 
     end
   end
+
+  describe "create" do
+
+      let(:movie_data) {
+    {
+      title: "Spongebob",
+      overview: "Square pants",
+      release_date: "2001",
+      inventory: 5,
+      available_inventory: 0
+    }
+  }
+    it "affects the model when creating a new movie" do
+      proc {
+        post movies_url, params: movie_data
+      }.must_change 'Movie.count', 1
+      must_respond_with :ok
+    end
+
+    it "won't create with already existing movie" do
+      
+    end
+  end
 end

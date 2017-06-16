@@ -32,7 +32,7 @@ class MoviesController < ApplicationController
         render json: movie.as_json, status: :ok
       else
         render json: {errors: {movie: ["An error occurred"]}}
-      end 
+      end
     end
 
   end
@@ -40,7 +40,7 @@ class MoviesController < ApplicationController
   private
 
   def movie_params
-    params.require(:movie).permit(:title, :overview, :release_date, :inventory, :image_url)
+    params.require(:movie).permit(:title, :overview, :release_date, :inventory, :image_url, :external_id)
   end
 
   def require_movie
