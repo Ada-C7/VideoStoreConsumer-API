@@ -11,6 +11,12 @@ class MoviesController < ApplicationController
     render status: :ok, json: data
   end
 
+  def create
+    @rental_movie = Movie.create!(title: params[:title], overview: params[:overview], release_date: params[:release_date], image_url: params[:image_url])
+
+
+  end
+
   def show
     render(
       status: :ok,
