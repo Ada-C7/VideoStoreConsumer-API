@@ -20,16 +20,17 @@ class MoviesController < ApplicationController
   # I just want to add a new movie
 
   def create #add to rental library
-    @movie = Movie.new(data)
-    if @movie.save
-      respond_to do |format|
-        format.json{}
-      end
-      flash[:status] = :success
-
-    else
-      flash[:status] = :failure
-    end
+    @movie = Movie.create(input)
+    # @movie = Movie.new(data)
+    # if @movie.save
+    #   respond_to do |format|
+    #     format.json{}
+    #   end
+    #   flash[:status] = :success
+    #
+    # else
+    #   flash[:status] = :failure
+    # end
   end
 
   ###### ########## ######
@@ -51,5 +52,9 @@ class MoviesController < ApplicationController
     unless @movie
       render status: :not_found, json: { errors: { title: ["No movie with title #{params["title"]}"] } }
     end
+  end
+
+  def input
+    return params.require(:movie).permit(:title, :overview, :release_date, :inventory, :image_url)
   end
 end
