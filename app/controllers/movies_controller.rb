@@ -22,7 +22,7 @@ class MoviesController < ApplicationController
   end
 
   def create
-    existing_movie = Movie.find_by(title: movie_params[:title])
+    existing_movie = Movie.find_by(overview: movie_params[:overview])
 
     if existing_movie
       render json: {errors: {movie: ["#{params[:title]} is already in Video Store"]}}
