@@ -22,28 +22,29 @@ class MoviesController < ApplicationController
   end
 
   def create
-    movie_data = {
-      title: params[:title],
-      overview: params[:overview],
-      release_date: params[:release_date],
-      image_url: params[:image_url]#[31..-1]
-    }
+    # movie_data = {
+    #   title: params[:title],
+    #   overview: params[:overview],
+    #   release_date: params[:release_date],
+    #   image_url: params[:image_url]#[31..-1]
+    # }
 
-    # puts movie_data
+    movie = Movie.new(movie_params)
 
-    movie = Movie.new(movie_data)
-    existing_movie = Movie.find_by(title: params[:title], release_date: params[:release_date])
-    # if existing_movie.nil?
-      if movie.save
+    if movie.save
+      # if Movie.find_by(title: params[:title], release_date: params[:release_date])
         render status: :ok, json: movie
-      else
-      render status: :error
-      end
-    # end
+    else
+      render status: :error, json: {errors: movie.errors.messages}
+    end
   end
 
 
   private
+
+  def movie_params
+    params.permit(:title, :overview, :release_date, :image_url)
+  end
 
   def require_movie
     @movie = Movie.find_by(title: params[:title])

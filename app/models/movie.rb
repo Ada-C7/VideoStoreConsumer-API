@@ -1,6 +1,9 @@
 class Movie < ApplicationRecord
   attr_accessor :external_id
 
+  validates :title, presence: true
+  # validates :release_date, presence: true
+
   has_many :rentals
   has_many :customers, through: :rentals
 
