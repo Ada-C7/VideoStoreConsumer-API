@@ -30,7 +30,7 @@ class MovieWrapper
       release_date: api_result["release_date"],
       image_url: api_result["poster_path"],
       #image_url: api_result["poster_path"] ? self.construct_image_url(api_result["poster_path"]) : nil,
-      external_id: api_result["external_id"],
+      external_id: api_result["id"],
       inventory: 1)
   end
 
