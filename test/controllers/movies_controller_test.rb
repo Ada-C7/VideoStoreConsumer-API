@@ -126,5 +126,24 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
             body.must_equal "errors" => {"inventory"=>["can't be blank", "is not a number"]
             }
         end
+
+        it "won't create a movie that already exists" do
+          proc {
+            post movies_url, params: {
+              movie:
+              {
+                title: movies(:one).title,
+                overview: movies(:one).overview,
+                release_date: movies(:one).release_date,
+                image_url: movies(:one).image_url,
+                inventory: movies(:one).inventory
+              }
+            }
+          }.must_change 'Movie.count', 0
+
+          body = JSON.parse(response.body)
+          body.must_equal "errors" => {"movie"=>[" is already in Video Store"]
+          }
+        end
       end
 end
