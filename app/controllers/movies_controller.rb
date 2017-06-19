@@ -21,6 +21,15 @@ class MoviesController < ApplicationController
       )
   end
 
+  def create
+    @movie = Movie.new(movie_params)
+    if @movie.save
+      render json: @movie, status: :ok
+    else
+      render status: :not_found
+    end
+  end
+
   private
 
   def require_movie
@@ -28,5 +37,9 @@ class MoviesController < ApplicationController
     unless @movie
       render status: :not_found, json: { errors: { title: ["No movie with title #{params["title"]}"] } }
     end
+  end
+
+  def movie_params
+    params.require(:movie).permit(:title, :overview, :release_date, :external_id, :image_url)
   end
 end
