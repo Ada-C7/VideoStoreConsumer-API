@@ -31,7 +31,19 @@ class MoviesController < ApplicationController
     else
       render json: { errors: movie.errors.messages }, status: :bad_request
     end
+  end
 
+  def destroy
+    movie = Movie.find_by(id: params[:id])
+    if movie
+      if movie.destroy
+        render json: {id: movie.id}, status: :ok
+      else
+        render json: { errors: movie.errors.messages }, status: :bad_request
+      end
+    else
+      render json: { errors: "This Movie does not exist in the database" }, status: :not_found
+    end
   end
 
   private
