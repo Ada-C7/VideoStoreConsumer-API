@@ -10,10 +10,13 @@ class Movie < ApplicationRecord
 
   def image_url
     orig_value = read_attribute :image_url
-    if !orig_value
+    if !orig_value || orig_value == "http://lorempixel.com/185/278/"
       MovieWrapper::DEFAULT_IMG_URL
     else
+      orig_value.slice!('https://image.tmdb.org/t/p/w185')
       MovieWrapper.construct_image_url(orig_value)
+      # .slice!('https://image.tmdb.org/t/p/w185')
+      # puts "^^^^^^" + orig_value
     end
   end
 end
