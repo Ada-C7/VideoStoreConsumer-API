@@ -22,12 +22,12 @@ class MoviesController < ApplicationController
   end
 
   def create
-    # movie_data = {
-    #   title: params[:title],
-    #   overview: params[:overview],
-    #   release_date: params[:release_date],
-    #   image_url: params[:image_url]#[31..-1]
-    # }
+    movie_params = {
+      title: params[:title],
+      overview: params[:overview],
+      release_date: params[:release_date],
+      image_url: params[:image_url][31..-1]
+    }
 
     movie = Movie.new(movie_params)
 
