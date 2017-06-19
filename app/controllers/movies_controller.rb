@@ -11,6 +11,14 @@ class MoviesController < ApplicationController
     render status: :ok, json: data
   end
 
+  ###### Added Create Method ######
+
+  def create #add to rental library
+    @movie = Movie.create(input)
+  end
+
+  ###### ################## ######
+
   def show
     render(
     status: :ok,
@@ -21,14 +29,15 @@ class MoviesController < ApplicationController
     )
   end
 
-  def create
-    movie = Movie.find_by(title: params[:title])
-    if movie.save
-      render status :okay, json; {id: movie.id}
-    else
-      render status :bad_request, json: {errors: movie.errors.messages}
-    end
+  ###### Working on Update method ######
+
+  def update
+    # want to be able to update inventory count
+    @movie = Movie.find(params[:id])
+    @movie.update_attribute(:inventory,)
   end
+
+  ###### ######################## ######
 
 
 
@@ -41,9 +50,9 @@ class MoviesController < ApplicationController
     end
   end
 
-  def movie_params
-    params.require(:movie).permit(:title, :inventory, :overview, :release_date, :image_url)
-
+  #### for create method ####
+  def input
+    return params.require(:movie).permit(:title, :overview, :release_date, :inventory, :image_url)
   end
-
+  ### ################## ###
 end
