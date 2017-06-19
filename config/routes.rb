@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :customers, only: [:index]
 
-  get "/movies/search", to: "movies#index"
+  get "/movies/search", to: "movies#search"
   post "/movies", to: "movies#create"
 
   resources :movies, only: [:index, :show], param: :title
