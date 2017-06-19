@@ -5,9 +5,9 @@ class Movie < ApplicationRecord
   has_many :customers, through: :rentals
 
   validates :title, presence: true
-  validates :inventory, presence: true, numericality: { only_integer: true }
-  validates :external_id, uniqueness: true, allow_nil: true
-  
+  # validates :inventory, presence: true, numericality: { only_integer: true }
+  # validates :external_id, uniqueness: true, allow_nil: true
+
   def available_inventory
     self.inventory - Rental.where(movie: self, returned: false).length
   end
@@ -17,7 +17,8 @@ class Movie < ApplicationRecord
     if !orig_value
       MovieWrapper::DEFAULT_IMG_URL
     else
-      MovieWrapper.construct_image_url(orig_value)
+       return orig_value
+      # MovieWrapper.construct_image_url(orig_value)
     end
   end
 end
