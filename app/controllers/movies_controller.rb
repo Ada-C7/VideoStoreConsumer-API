@@ -40,6 +40,7 @@ class MoviesController < ApplicationController
   private
 
   def movie_params
+    puts params.inspect
     params.require(:movie).permit(:title, :overview, :release_date, :inventory, :image_url, :external_id)
   end
 
