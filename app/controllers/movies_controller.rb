@@ -23,17 +23,23 @@ class MoviesController < ApplicationController
 
   def create
     movie_data = {
-      title: movie_params[:title],
-      overview: movie_params[:overview],
-      release_date: movie_params[:release_date],
-      image_url: movie_params[:image_url][31..-1]
+      title: params[:title],
+      overview: params[:overview],
+      release_date: params[:release_date],
+      image_url: params[:image_url]#[31..-1]
     }
+
+    # puts movie_data
 
     movie = Movie.new(movie_data)
     existing_movie = Movie.find_by(title: params[:title], release_date: params[:release_date])
-    if existing_movie.nil?
-    movie.save
-    end
+    # if existing_movie.nil?
+      if movie.save
+        render status: :ok, json: movie
+      else
+      render status: :error
+      end
+    # end
   end
 
 
