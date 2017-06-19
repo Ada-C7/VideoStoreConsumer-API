@@ -15,8 +15,6 @@ class Movie < ApplicationRecord
     else
       orig_value.slice!('https://image.tmdb.org/t/p/w185')
       MovieWrapper.construct_image_url(orig_value)
-      # .slice!('https://image.tmdb.org/t/p/w185')
-      # puts "^^^^^^" + orig_value
     end
   end
 end
