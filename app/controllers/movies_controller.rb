@@ -11,29 +11,13 @@ class MoviesController < ApplicationController
     render status: :ok, json: data
   end
 
-  ###### Attempt 1 ######
-
-  # def new
-  #   @movie = Movie.new()
-  # end
-  # this would return an HTML form for creating a new movie
-  # I just want to add a new movie
+  ###### Added Create Method ######
 
   def create #add to rental library
     @movie = Movie.create(input)
-    # @movie = Movie.new(data)
-    # if @movie.save
-    #   respond_to do |format|
-    #     format.json{}
-    #   end
-    #   flash[:status] = :success
-    #
-    # else
-    #   flash[:status] = :failure
-    # end
   end
 
-  ###### ########## ######
+  ###### ################## ######
 
   def show
     render(
@@ -45,6 +29,16 @@ class MoviesController < ApplicationController
       )
   end
 
+  ###### Working on Update method ######
+
+  def update
+    # want to be able to update inventory count
+    @movie = Movie.find(params[:id])
+    @movie.update_attribute(:inventory,)
+  end
+
+  ###### ######################## ######
+
   private
 
   def require_movie
@@ -54,7 +48,9 @@ class MoviesController < ApplicationController
     end
   end
 
+  #### for create method ####
   def input
     return params.require(:movie).permit(:title, :overview, :release_date, :inventory, :image_url)
   end
+  ### ################## ###
 end
