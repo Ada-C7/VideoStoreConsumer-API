@@ -91,8 +91,40 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
         must_respond_with :ok
       end
 
-      it "won't create with already existing movie" do
+      it "won't create with missing title" do
+        proc {
+          post movies_url, params: {  movie:
+            {
+              overview: "Square Pants",
+              release_date: "2001",
+              inventory: 5,
+              image_url: ""}
+            }
+          }.must_change 'Movie.count', 0
+          must_respond_with :bad_request
 
+          body = JSON.parse(response.body)
+          body.must_equal "errors" => {
+            "title" => ["can't be blank" ]
+          }
+
+        end
+
+        it "won't create a movie with missing inventory count" do
+
+          proc {
+            post movies_url, params: {  movie:
+              { title: "Movie!",
+                overview: "Square Pants",
+                release_date: "2001",
+                image_url: ""}
+              }
+            }.must_change 'Movie.count', 0
+            must_respond_with :bad_request
+
+            body = JSON.parse(response.body)
+            body.must_equal "errors" => {"inventory"=>["can't be blank", "is not a number"]
+            }
+        end
       end
-    end
 end

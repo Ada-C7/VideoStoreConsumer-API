@@ -31,7 +31,7 @@ class MoviesController < ApplicationController
       if movie.save
         render json: movie.as_json, status: :ok
       else
-        render json: {errors: {movie: ["An error occurred"]}}
+        render status: :bad_request, json: {errors: movie.errors.messages}
       end
     end
 
