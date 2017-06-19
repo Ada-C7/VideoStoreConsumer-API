@@ -21,12 +21,12 @@ class MoviesController < ApplicationController
 
   def show
     render(
-      status: :ok,
-      json: @movie.as_json(
-        only: [:title, :overview, :release_date, :inventory],
-        methods: [:available_inventory]
-        )
-      )
+    status: :ok,
+    json: @movie.as_json(
+    only: [:title, :overview, :release_date, :inventory],
+    methods: [:available_inventory]
+    )
+    )
   end
 
   ###### Working on Update method ######
@@ -38,6 +38,8 @@ class MoviesController < ApplicationController
   end
 
   ###### ######################## ######
+
+
 
   private
 
