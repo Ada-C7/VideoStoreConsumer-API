@@ -28,6 +28,7 @@ class MoviesController < ApplicationController
       render json: {errors: {movie: ["#{params[:title]} is already in Video Store"]}}
     else
       movie = Movie.new(movie_params)
+      movie.inventory = 1;
       if movie.save
         render json: movie.as_json, status: :ok
       else
@@ -40,7 +41,6 @@ class MoviesController < ApplicationController
   private
 
   def movie_params
-    puts params.inspect
     params.require(:movie).permit(:title, :overview, :release_date, :inventory, :image_url, :external_id)
   end
 
