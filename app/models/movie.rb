@@ -4,6 +4,8 @@ class Movie < ApplicationRecord
   has_many :rentals
   has_many :customers, through: :rentals
 
+  validates_uniqueness_of :title, :scope => [:release_date]
+
   def available_inventory
     self.inventory - Rental.where(movie: self, returned: false).length
   end
