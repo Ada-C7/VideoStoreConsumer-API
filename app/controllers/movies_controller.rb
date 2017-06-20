@@ -34,7 +34,9 @@ class MoviesController < ApplicationController
   def update
     # want to be able to update inventory count
     @movie = Movie.find(params[:id])
-    @movie.update_attribute(:inventory,)
+    if @movie[:inventory] <= 9
+      @movie.increment!(:inventory, 1)
+    end
   end
 
   ###### ######################## ######
