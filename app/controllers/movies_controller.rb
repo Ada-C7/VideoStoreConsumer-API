@@ -28,11 +28,15 @@ class MoviesController < ApplicationController
     movie.image_url = params[:image_url]
     movie.overview = params[:overview]
     movie.release_date = params[:release_date]
-    movie.inventory = params[:inventory]
+    if !params[:inventory]
+      movie.inventory = 1
+    else
+      movie.inventory = params[:inventory]
+    end
 
     if
       movie.save
-      render status: :ok, json: {id: movie.id, title: movie.title}
+      render status: :ok, json: {id: movie.id, title: movie.title, inventory: movie.inventory}
     else
       render status: :bad_request, json: { errors: movie.errors.messages }
     end
