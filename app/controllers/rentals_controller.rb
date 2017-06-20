@@ -1,5 +1,6 @@
 class RentalsController < ApplicationController
-  before_action :require_movie, only: [:check_out, :check_in]
+  before_action :require_movie, only: [:check_out]
+  before_action :require_movie_checkin, only: [:check_in ]
   before_action :require_customer, only: [:check_out, :check_in]
 
   def index
@@ -54,6 +55,13 @@ private
     @movie = Movie.find_by title: params[:title]
     unless @movie
       render status: :not_found, json: { errors: { title: ["No movie with title #{params[:title]}"] } }
+    end
+  end
+
+  def require_movie_checkin
+    @movie = Movie.find_by id: params[:movie_id]
+    unless @movie
+      render status: :not_found, json: { errors: { title: ["No movie with id #{params[:movie_id]}"] } }
     end
   end
 
