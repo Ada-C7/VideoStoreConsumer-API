@@ -22,7 +22,10 @@ class MoviesController < ApplicationController
   end
 
   def create
-    movie = Movie.new(movie_params)
+
+    modified_params = movie_params
+    modified_params[:image_url] = modified_params[:image_url].gsub("https://image.tmdb.org/t/p/w185","")
+    movie = Movie.new(modified_params)
     movie.save
 
     render status: :ok, json: { title: movie.title }
