@@ -2,8 +2,8 @@ class MovieWrapper
   BASE_URL = "https://api.themoviedb.org/3/"
   KEY = ENV["MOVIEDB_KEY"]
 
-  # BASE_IMG_URL = "https://image.tmdb.org/t/p/"
-  # DEFAULT_IMG_SIZE = "w185"
+  BASE_IMG_URL = "https://image.tmdb.org/t/p/"
+  DEFAULT_IMG_SIZE = "w185"
   DEFAULT_IMG_URL = "http://lorempixel.com/185/278/"
 
   def self.search(query)
@@ -32,7 +32,7 @@ class MovieWrapper
   end
 
   def self.construct_image_url(img_name)
-    return   img_name
+    return BASE_IMG_URL + DEFAULT_IMG_SIZE + img_name
   end
 
 end
