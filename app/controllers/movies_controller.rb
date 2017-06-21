@@ -22,6 +22,13 @@ class MoviesController < ApplicationController
   end
 
   def create
+    movie_fixed_params = {
+      title: params["title"],
+      overview: params["overview"],
+      release_date: params["release_date"],
+      image_url: params["image_url"][31..-1],
+      external_id: params["id"]
+    }
     movie = Movie.new(movie_params)
     # movie.available_inventory = movie.inventory
     if Movie.find_by(overview: params[:overview])
