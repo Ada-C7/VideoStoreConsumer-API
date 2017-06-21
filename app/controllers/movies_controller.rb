@@ -26,9 +26,12 @@ class MoviesController < ApplicationController
     modified_params = movie_params
     modified_params[:image_url] = modified_params[:image_url].gsub("https://image.tmdb.org/t/p/w185","")
     movie = Movie.new(modified_params)
-    movie.save
 
-    render status: :ok, json: { title: movie.title }
+    if movie.save
+      render status: :ok, json: { title: movie.title }
+    else
+      render status: :bad_request, json: { errors: movie.errors.messages }
+    end
   end
 
   private
