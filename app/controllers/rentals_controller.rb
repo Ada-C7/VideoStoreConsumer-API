@@ -2,6 +2,15 @@ class RentalsController < ApplicationController
   before_action :require_movie, only: [:check_out, :check_in]
   before_action :require_customer, only: [:check_out, :check_in]
 
+  def index
+    data = Rental.all.paginate(page: params[:p], per_page: params[:n])
+
+    render json: data.as_json(
+      only: [:checkout_date, :due_date, :returned],
+      methods: [:customer, :movie]
+    )
+  end
+
   def check_out
     rental = Rental.new(movie: @movie, customer: @customer, due_date: params[:due_date], returned: false)
 
