@@ -29,7 +29,7 @@ class MoviesController < ApplicationController
       image_url: params["image_url"][31..-1],
       external_id: params["id"]
     }
-    movie = Movie.new(movie_params)
+    movie = Movie.new(movie_fixed_params)
     # movie.available_inventory = movie.inventory
     if Movie.find_by(overview: params[:overview])
       movie.inventory += 1
