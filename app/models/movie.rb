@@ -15,6 +15,8 @@ class Movie < ApplicationRecord
 
       movies = MovieWrapper.search(title)
       image_url = movies[0][:image_url]
+      self[:image_url] = image_url
+      self.save!
 
       MovieWrapper.construct_image_url(image_url)
     else
