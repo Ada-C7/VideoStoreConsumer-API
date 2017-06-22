@@ -21,6 +21,25 @@ class MovieWrapper
     end
   end
 
+  def self.search_poster(title, year)
+    url = BASE_URL + "search/movie?api_key=" + KEY + "&query=" + title + "&year=" + year
+
+    response =  HTTParty.get(url)
+    puts response
+
+
+    if response["total_results"] > 0
+      result = response["results"][0]
+      image_url = result["poster_path"]
+
+      poster_url = "#{BASE_IMG_URL}" + "#{DEFAULT_IMG_SIZE}" + image_url
+
+      return poster_url
+    else
+      return "#{DEFAULT_IMG_URL}" + "#{DEFAULT_IMG_SIZE}"
+    end
+  end
+
   private
 
   def self.construct_movie(api_result)
