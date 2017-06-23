@@ -1,6 +1,16 @@
 class RentalsController < ApplicationController
   before_action :require_movie, only: [:check_out, :check_in]
-  before_action :require_customer, only: [:check_out, :check_in]
+  before_action :require_customer, only: [:check_out, :check_in, :customer_rental]
+
+  def index
+    data = Rental.all
+    render status: :ok, json: data
+  end
+
+  def customer_rental
+    rentals = Rental.where(customer: @customer)
+    render status: :ok, json: rentals
+  end
 
   def check_out
     rental = Rental.new(movie: @movie, customer: @customer, due_date: params[:due_date], returned: false)
@@ -32,18 +42,20 @@ class RentalsController < ApplicationController
   def overdue
     rentals = Rental.overdue.map do |rental|
       {
-          title: rental.movie.title,
-          customer_id: rental.customer_id,
-          name: rental.customer.name,
-          postal_code: rental.customer.postal_code,
-          checkout_date: rental.checkout_date,
-          due_date: rental.due_date
+        title: rental.movie.title,
+        customer_id: rental.customer_id,
+        name: rental.customer.name,
+        postal_code: rental.customer.postal_code,
+        checkout_date: rental.checkout_date,
+        due_date: rental.due_date
       }
     end
     render status: :ok, json: rentals
   end
 
-private
+
+
+  private
   # TODO: make error payloads arrays
   def require_movie
     @movie = Movie.find_by title: params[:title]
