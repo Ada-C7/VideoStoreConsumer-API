@@ -4,7 +4,7 @@ class MovieWrapper
 
   BASE_IMG_URL = "https://image.tmdb.org/t/p/"
   DEFAULT_IMG_SIZE = "w185"
-  DEFAULT_IMG_URL = "http://lorempixel.com/185/278/"
+  DEFAULT_IMG_URL = "https://dummyimage.com/185x278/feaa03/ffffff.png&text=Poster+unavailable"
 
   def self.search(query)
 
@@ -36,24 +36,29 @@ class MovieWrapper
 
       return poster_url
     else
-      return "#{DEFAULT_IMG_URL}" + "#{DEFAULT_IMG_SIZE}"
+      return "#{DEFAULT_IMG_URL}"
     end
   end
 
   private
 
   def self.construct_movie(api_result)
+    image_url = MovieWrapper.create_poster_url(api_result["poster_path"])
+
     Movie.new(
-      title: api_result["title"],
-      overview: api_result["overview"],
-      release_date: api_result["release_date"],
-      image_url: "#{BASE_IMG_URL}" + "#{DEFAULT_IMG_SIZE}" + "#{api_result["poster_path"]}",
-      external_id: api_result["id"]
+    title: api_result["title"],
+    overview: api_result["overview"],
+    release_date: api_result["release_date"],
+    image_url: image_url,
+    external_id: api_result["id"]
     )
   end
 
-  def self.construct_image_url(img_name)
-    return BASE_IMG_URL + DEFAULT_IMG_SIZE + img_name
+  def self.create_poster_url(poster_path)
+    if poster_path
+      "#{BASE_IMG_URL}" + "#{DEFAULT_IMG_SIZE}" + "#{poster_path}"
+    else
+      "#{DEFAULT_IMG_URL}"
+    end
   end
-
 end
