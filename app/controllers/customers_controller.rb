@@ -14,7 +14,7 @@ class CustomersController < ApplicationController
 
     render json: data.as_json(
       only: [:id, :name, :registered_at, :address, :city, :state, :postal_code, :phone, :account_credit],
-      methods: [:movies_checked_out_count]
+      methods: [:movies_checked_out_count, :all_rentals]
     )
   end
 
@@ -22,9 +22,8 @@ class CustomersController < ApplicationController
     customer = Customer.find_by(id: params[:id])
     if customer
       render json: customer.as_json(
-        only: [:id, :name, :registered_at, :address, :city, :state, :postal_code, :phone, :account_credit, :rentals],
-        methods: [:movies_checked_out_count],
-        include: [:rentals]
+        only: [:id, :name, :registered_at, :address, :city, :state, :postal_code, :phone, :account_credit],
+        methods: [:movies_checked_out_count, :all_rentals]
       )
     else
       render status: :bad_request, json: { errors: errors }
