@@ -4,7 +4,7 @@ class MovieWrapper
 
   BASE_IMG_URL = "https://image.tmdb.org/t/p/"
   DEFAULT_IMG_SIZE = "w185"
-  DEFAULT_IMG_URL = "http://lorempixel.com/185/278/"
+  DEFAULT_IMG_URL = "https://i.ytimg.com/vi/E48ri9sh0u0/maxresdefault.jpg"
 
   def self.search(query)
     url = BASE_URL + "search/movie?api_key=" + KEY + "&query=" + query
