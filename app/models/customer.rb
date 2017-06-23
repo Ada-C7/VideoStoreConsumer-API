@@ -5,4 +5,8 @@ class Customer < ApplicationRecord
   def movies_checked_out_count
     self.rentals.where(returned: false).length
   end
+
+  def all_rentals
+    self.movies
+  end
 end
