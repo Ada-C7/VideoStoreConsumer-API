@@ -60,9 +60,11 @@ group :development do
   gem 'pry-rails'
 
   gem 'dotenv-rails'
+  # added token to .env
 end
 
 group :test do
+  gem 'minitest-rails'
   gem 'minitest-spec-rails'
   gem 'minitest-reporters'
 end
