@@ -11,6 +11,20 @@ class MoviesController < ApplicationController
     render status: :ok, json: data
   end
 
+  def create
+    movie = Movie.new(movie_params)
+    if movie.save
+      render json: movie.as_json, status: :ok
+    else
+      render json: {errors: {movie: ["Unable to add to #{params[:title]} your Movie Store!"]} }
+    end
+    # create new movie with title
+    # Save it to DB.
+    # Send it to front end backbone.
+    # Add to collecction
+    # Rerender.
+  end
+
   def show
     render(
       status: :ok,
@@ -22,6 +36,10 @@ class MoviesController < ApplicationController
   end
 
   private
+
+  def movie_params
+    params.require(:movie).permit(:title, :overview, :release_date, :image_url)
+  end
 
   def require_movie
     @movie = Movie.find_by(title: params[:title])
