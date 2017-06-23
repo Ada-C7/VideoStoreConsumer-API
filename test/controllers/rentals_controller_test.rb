@@ -232,12 +232,11 @@ class RentalsControllerTest < ActionDispatch::IntegrationTest
 
       data.each do |rental|
         rental.must_be_kind_of Hash
-        rental.must_include "title"
-        rental.must_include "customer_id"
-        rental.must_include "name"
-        rental.must_include "postal_code"
         rental.must_include "checkout_date"
         rental.must_include "due_date"
+        rental.must_include "returned"
+        rental.must_include "customer"
+        rental.must_include "movie"
       end
     end
   end
