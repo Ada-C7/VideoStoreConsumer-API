@@ -9,6 +9,15 @@ class RentalsController < ApplicationController
 
   def customer_rental
     rentals = Rental.where(customer: @customer)
+    rentals = rentals.map do |rental|
+      {
+        title: rental.movie.title,
+        customer_id: rental.customer_id,
+        checkout_date: rental.checkout_date,
+        due_date: rental.due_date,
+        returned: rental.returned
+      }
+    end
     render status: :ok, json: rentals
   end
 
