@@ -1,6 +1,50 @@
 require 'test_helper'
 
 class MoviesControllerTest < ActionDispatch::IntegrationTest
+  describe "create" do
+    it "creates a new movie" do
+      post new_movie_path params: { title: "WowMovie!", overview: "MyText", release_date: "2017-01-11", inventory: 4 }
+      assert_response :success
+      Movie.last.title.must_equal movies(:one).title
+    end
+
+    it "returns the id of the movie if successful" do
+      post new_movie_path(movies(:one))
+      body = JSON.parse(response.body)
+      body.must_be_kind_of Hash
+      body["id"].must_equal Movie.last.id
+    end
+
+    # checks that if the movie already exisit in our library, then it return error message
+  end
+
+  describe "destroy" do
+    it "deletes a movie" do
+      Movie.destroy_all
+      post new_movie_path params: { title: "WowMovie!", overview: "MyText", release_date: "2017-01-11", inventory: 4 }
+      movie_id = Movie.first.id
+      delete delete_movie_path(movie_id)
+      assert_response :success
+      body = JSON.parse(response.body)
+      body.must_be_kind_of Hash
+      body["id"].must_equal movie_id
+      Movie.count.must_equal 0
+    end
+
+    it "Doens't delete movie if the id passed is invalid" do
+      Movie.destroy_all
+      post new_movie_path params: { title: "WowMovie!", overview: "MyText", release_date: "2017-01-11", inventory: 4 }
+      delete delete_movie_path(23424556)
+      assert_response :not_found
+      Movie.count.must_equal 1
+      body = JSON.parse(response.body)
+      body.must_be_kind_of Hash
+      body["errors"].must_equal "This Movie does not exist in the database"
+    end
+  end
+
+
+
   describe "index" do
     it "returns a JSON array" do
       get movies_url

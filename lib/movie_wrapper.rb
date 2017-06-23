@@ -1,12 +1,13 @@
 class MovieWrapper
   BASE_URL = "https://api.themoviedb.org/3/"
   KEY = ENV["MOVIEDB_KEY"]
-
+# this is a comment
   BASE_IMG_URL = "https://image.tmdb.org/t/p/"
   DEFAULT_IMG_SIZE = "w185"
   DEFAULT_IMG_URL = "http://lorempixel.com/185/278/"
 
   def self.search(query)
+    puts KEY
     url = BASE_URL + "search/movie?api_key=" + KEY + "&query=" + query
     # puts url
     response =  HTTParty.get(url)
@@ -27,8 +28,10 @@ class MovieWrapper
       title: api_result["title"],
       overview: api_result["overview"],
       release_date: api_result["release_date"],
-      image_url: api_result["poster_path"], #(api_result["poster_path"] ? self.construct_image_url(api_result["poster_path"]) : nil),
-      external_id: api_result["id"])
+      image_url: api_result["poster_path"],
+      #image_url: api_result["poster_path"] ? self.construct_image_url(api_result["poster_path"]) : nil,
+      external_id: api_result["id"],
+      inventory: 1)
   end
 
   def self.construct_image_url(img_name)
