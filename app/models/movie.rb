@@ -11,7 +11,8 @@ class Movie < ApplicationRecord
   def image_url
     orig_value = read_attribute :image_url
     if !orig_value
-      MovieWrapper::DEFAULT_IMG_URL
+      "http://localhost:3000/assets/noimage.png"
+      # MovieWrapper::DEFAULT_IMG_URL
     else
       MovieWrapper.construct_image_url(orig_value)
     end
