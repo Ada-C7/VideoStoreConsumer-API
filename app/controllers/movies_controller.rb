@@ -21,6 +21,30 @@ class MoviesController < ApplicationController
       )
   end
 
+  def create
+    existing_movie = Movie.find_by(title: params["title"])
+    if existing_movie
+      puts existing_movie
+      existing_movie.inventory += 1
+      if existing_movie.save
+        render status: :ok, json: {
+          id: existing_movie.id
+        }
+      else
+        render status: :bad_request, json: {errors: 'could not add movie'}
+      end
+    else
+      new_movie = Movie.create(movie_params)
+      if new_movie.id
+          render status: :ok, json:{
+              id: new_movie.id
+          }
+      else
+          render status: :bad_request, json: {errors: 'could not create movie'}
+      end
+    end
+  end
+
   private
 
   def require_movie
@@ -28,5 +52,10 @@ class MoviesController < ApplicationController
     unless @movie
       render status: :not_found, json: { errors: { title: ["No movie with title #{params["title"]}"] } }
     end
+  end
+
+  def movie_params
+      params.require(:movie).permit(:title, :overview, :release_date, :image_url)
+
   end
 end

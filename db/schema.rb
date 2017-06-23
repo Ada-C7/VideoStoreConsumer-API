@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170612201103) do
+ActiveRecord::Schema.define(version: 20170620213100) do
 
   create_table "customers", force: :cascade do |t|
     t.string   "name"
@@ -29,9 +29,9 @@ ActiveRecord::Schema.define(version: 20170612201103) do
     t.string   "title"
     t.text     "overview"
     t.date     "release_date"
-    t.integer  "inventory"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "inventory",    default: 1
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.string   "image_url"
   end
 
