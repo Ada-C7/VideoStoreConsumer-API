@@ -14,7 +14,10 @@ class MoviesController < ApplicationController
   ###### Added Create Method ######
 
   def create #add to rental library
-    @movie = Movie.create(input)
+    # @movie = Movie.create(input)
+    @movie = Movie.new(input)
+    @movie[:inventory] = 1
+    @movie.save
   end
 
   ###### ################## ######
